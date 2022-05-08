@@ -1,14 +1,14 @@
-const leftbuttons = document.querySelectorAll('.left button')
-const rightbuttons = document.querySelectorAll('.rigth button')
-const info1 = document.querySelector('.left .info')
-const info2 = document.querySelector('.rigth .info')
+const mlmt1 = document.querySelector('.left .info')
+const mlmt2 = document.querySelector('.rigth .info')
 const input = document.querySelector('input')
 const answer = document.querySelector('.answer')
+const lftbtn = document.querySelectorAll('.left button')
+const rigbtn = document.querySelectorAll('.rigth button')
 
-let pul1 = 'RUB'
-let pul2 = 'USD'
+let mon1 = 'RUB'
+let mon2 = 'USD'
 
-fetch(`https://api.exchangerate.host/latest?base=${pul1}&symbols=${pul2}`)
+fetch(`https://api.exchangerate.host/latest?base=${mon1}&symbols=${mon2}`)
     .then(res => res.json())
     .then(data => {
         input.addEventListener('keyup', (e) => {
@@ -17,64 +17,64 @@ fetch(`https://api.exchangerate.host/latest?base=${pul1}&symbols=${pul2}`)
                 let vergul = input.value.indexOf(',')
                 input.value = input.value.slice(0, vergul) + '.'
             }
-            answer.innerHTML = input.value * data.rates[pul2]
+            answer.innerHTML = input.value * data.rates[mon2]
             if (answer.innerHTML == 'NaN') {
                 answer.innerHTML = ''
             }
         })
-        info1.innerHTML = `1 ${pul1} = ` + data.rates[pul2] + ` ${pul2}`
+        mlmt1.innerHTML = `1 ${mon1} = ` + data.rates[mon2] + ` ${mon2}`
     })
-fetch(`https://api.exchangerate.host/latest?base=${pul2}&symbols=${pul1}`)
+fetch(`https://api.exchangerate.host/latest?base=${mon2}&symbols=${mon1}`)
     .then(res => res.json())
     .then(data =>
-        info2.innerHTML = `1 ${pul2} = ` + data.rates[pul1] + ` ${pul1}`
+        mlmt2.innerHTML = `1 ${mon2} = ` + data.rates[mon1] + ` ${mon1}`
     )
 
 
-leftbuttons.forEach(item => {
+lftbtn.forEach(item => {
     item.addEventListener('click', (e) => {
-        leftbuttons.forEach(button => {
+        lftbtn.forEach(button => {
             button.className = 'normal'
         })
         e.target.className = 'active'
-        pul1 = item.innerHTML
-        fetch(`https://api.exchangerate.host/latest?base=${pul1}&symbols=${pul2}`)
+        mon1 = item.innerHTML
+        fetch(`https://api.exchangerate.host/latest?base=${mon1}&symbols=${mon2}`)
             .then(res => res.json())
             .then(data => {
                 input.addEventListener('keyup', () => {
-                    answer.innerHTML = input.value * data.rates[pul2]
+                    answer.innerHTML = input.value * data.rates[mon2]
                 })
-                answer.innerHTML = input.value * data.rates[pul2]
-                info1.innerHTML = `1 ${pul1} = ` + data.rates[pul2] + ` ${pul2}`
+                answer.innerHTML = input.value * data.rates[mon2]
+                mlmt1.innerHTML = `1 ${mon1} = ` + data.rates[mon2] + ` ${mon2}`
             })
-        fetch(`https://api.exchangerate.host/latest?base=${pul2}&symbols=${pul1}`)
+        fetch(`https://api.exchangerate.host/latest?base=${mon2}&symbols=${mon1}`)
             .then(res => res.json())
             .then(data => {
-                info2.innerHTML = `1 ${pul2} = ` + data.rates[pul1] + ` ${pul1}`
+                mlmt2.innerHTML = `1 ${mon2} = ` + data.rates[mon1] + ` ${mon1}`
             })
     })
 })
-rightbuttons.forEach(item => {
+rigbtn.forEach(item => {
     item.addEventListener('click', (e) => {
-        rightbuttons.forEach(button => {
+        rigbtn.forEach(button => {
             button.className = 'normal'
         })
         e.target.className = 'active'
-        pul2 = item.innerHTML
-        fetch(`https://api.exchangerate.host/latest?base=${pul1}&symbols=${pul2}`)
+        mon2 = item.innerHTML
+        fetch(`https://api.exchangerate.host/latest?base=${mon1}&symbols=${mon2}`)
             .then(res => res.json())
             .then(data => {
                 input.addEventListener('keyup', (e) => {
                     input.value = e.target.value
-                    answer.innerHTML = input.value * data.rates[pul2]
+                    answer.innerHTML = input.value * data.rates[mon2]
                 })
-                info1.innerHTML = `1 ${pul1} = ` + data.rates[pul2] + ` ${pul2}`
-                answer.innerHTML = input.value * data.rates[pul2]
+                mlmt1.innerHTML = `1 ${mon1} = ` + data.rates[mon2] + ` ${mon2}`
+                answer.innerHTML = input.value * data.rates[mon2]
             })
-        fetch(`https://api.exchangerate.host/latest?base=${pul2}&symbols=${pul1}`)
+        fetch(`https://api.exchangerate.host/latest?base=${mon2}&symbols=${mon1}`)
             .then(res => res.json())
             .then(data => {
-                info2.innerHTML = `1 ${pul2} = ` + data.rates[pul1] + ` ${pul1}`
+                mlmt2.innerHTML = `1 ${mon2} = ` + data.rates[mon1] + ` ${mon1}`
             })
     })
 })
